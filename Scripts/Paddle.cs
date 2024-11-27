@@ -80,30 +80,30 @@ public partial class Paddle : Area2D
 	// Handle gem collision
 	private void OnBodyEntered(Node body)
 {	
-    if (body is LengthBooster lengthBooster)
-    {
-        // Increase the paddle's length
-        Length = 212.0f; 
-        lengthBooster.QueueFree();
-    }
-    else if (body is LengthDebooster lengthDebooster)
-    {
-        // Decrease the paddle's length
-        Length = 53.0f; 
-        lengthDebooster.QueueFree();
-    }
-    else if (body is SpeedBooster speedBooster)
-    {
-        // Increase the paddle's speed
-        Speed = 1000.0f;
-        speedBooster.QueueFree();
-    }
-    else if (body is SpeedDebooster speedDebooster)
-    {
-        // Decrease the paddle's speed
-        Speed = 250.0f; 
-        speedDebooster.QueueFree();
-    }
+	if (body is LengthBooster lengthBooster)
+	{
+		// Increase the paddle's length
+		Length = 212.0f; 
+		lengthBooster.QueueFree();
+	}
+	else if (body is LengthDebooster lengthDebooster)
+	{
+		// Decrease the paddle's length
+		Length = 53.0f; 
+		lengthDebooster.QueueFree();
+	}
+	else if (body is SpeedBooster speedBooster)
+	{
+		// Increase the paddle's speed
+		Speed = 1000.0f;
+		speedBooster.QueueFree();
+	}
+	else if (body is SpeedDebooster speedDebooster)
+	{
+		// Decrease the paddle's speed
+		Speed = 250.0f; 
+		speedDebooster.QueueFree();
+	}
 }
 
 
