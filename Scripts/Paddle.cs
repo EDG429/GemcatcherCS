@@ -41,19 +41,29 @@ public partial class Paddle : Area2D
 		// Connect to the LengthChanger's signal dynamically
 		foreach (Node node in GetTree().GetNodesInGroup("length_changers")) // Need to add length_changers to groups in the IDE
 		{
-			if (node is LengthChanger lengthChanger)
+			if (node is LengthBooster lengthBooster)
 			{
-				 lengthChanger.Connect(nameof(LengthChanger.LengthChanged), new Callable(this, nameof(OnLengthChanged)));
+				 lengthBooster.Connect(nameof(LengthBooster.LengthChanged), new Callable(this, nameof(OnLengthChanged)));
 			}
+			else if (node is LengthDebooster lengthDebooster)
+			{
+				lengthDebooster.Connect(nameof(LengthBooster.LengthChanged), new Callable(this, nameof(OnLengthChanged)));
+			}
+			
 		}
 
 		// Connect to the SpeedChanger's signal dynamically
 		foreach (Node node in GetTree().GetNodesInGroup("speed_changers")) // Need to add speed_changers to groups in the IDE
 		{
-			if (node is SpeedChanger speedChanger)
+			if (node is SpeedBooster speedBooster)
 			{
-				speedChanger.Connect(nameof(SpeedChanger.SpeedChanged), new Callable(this, nameof(OnSpeedChanged)));
+				speedBooster.Connect(nameof(speedBooster.SpeedChanged), new Callable(this, nameof(OnSpeedChanged)));
 			}
+			else if (node is SpeedDebooster speedDebooster)
+			{
+				speedDebooster.Connect(nameof(speedBooster.SpeedChanged), new Callable(this, nameof(OnSpeedChanged)));
+			}
+
 		}
 
 		// Listen for new LengthChanger and SpeedChanger nodes added dynamically
@@ -63,20 +73,28 @@ public partial class Paddle : Area2D
 	// Handle dynamically added nodes
 	private void OnNodeAdded(Node node)
 	{
-		if (node is LengthChanger lengthChanger && node.IsInGroup("length_changers"))
+		if (node is LengthBooster lengthBooster && node.IsInGroup("length_changers"))
 		{
-			lengthChanger.Connect(nameof(LengthChanger.LengthChanged), new Callable(this, nameof(OnLengthChanged)));
+			lengthBooster.Connect(nameof(LengthBooster.LengthChanged), new Callable(this, nameof(OnLengthChanged)));
 		}
-		else if (node is SpeedChanger speedChanger && node.IsInGroup("speed_changers"))
+		else if (node is LengthDebooster lengthDebooster && node.IsInGroup("length_changers"))
 		{
-			speedChanger.Connect(nameof(SpeedChanger.SpeedChanged), new Callable(this, nameof(OnSpeedChanged)));
+			lengthDebooster.Connect(nameof(LengthBooster.LengthChanged), new Callable(this, nameof(OnLengthChanged)));
+		}
+		else if (node is SpeedBooster speedBooster && node.IsInGroup("speed_changers"))
+		{
+			speedBooster.Connect(nameof(SpeedBooster.SpeedChanged), new Callable(this, nameof(OnSpeedChanged)));
+		}
+		else if (node is SpeedDebooster speedDebooster && node.IsInGroup("speed_changers"))
+		{
+			speedDebooster.Connect(nameof(speedDebooster.SpeedChanged), new Callable(this, nameof(OnSpeedChanged)));
 		}
 	}
 
 	// Signal handler for changing length
 	private void OnLengthChanged(float newLength)
 	{
-    	Length = newLength; // Update the paddle's length
+		Length = newLength; // Update the paddle's length
 	}
 	
 	// Signal handler for changing speed
@@ -97,17 +115,17 @@ public partial class Paddle : Area2D
 		if (_speed >= 750.0f)
 		{
 			if (!boostSound.Playing) // Prevent overlapping sounds
-            {
-                boostSound.Play();
-            }
+			{
+				boostSound.Play();
+			}
 		}
 
 		else if (_speed <= 350.0f)
 		{
 			if (!decreaseSound.Playing) // Prevent overlapping sounds
-            {
-                decreaseSound.Play();
-            }
+			{
+				decreaseSound.Play();
+			}
 		}
 	}
 

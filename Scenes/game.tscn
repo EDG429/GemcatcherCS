@@ -17,4 +17,4 @@ texture = ExtResource("1_hf22b")
 position = Vector2(574, 625)
 
 [node name="gem" parent="." instance=ExtResource("4_uuoqg")]
-position = Vector2(568, 423)
+position = Vector2(568, 92)
