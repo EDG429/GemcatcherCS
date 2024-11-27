@@ -20,24 +20,25 @@ public partial class Gem : Area2D
 		{
 			QueueFree();
 		}
-		
 	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		// Add this gem to the "gems" group
 		AddToGroup("gems");
-		
-		// Connect the "body_entered" signal dynamically
-		Connect("body_entered", new Callable(this, nameof(OnBodyEntered)));
+
+		// Connect the "area_entered" signal
+		Connect("area_entered", new Callable(this, nameof(OnAreaEntered)));
 	}
 
-	// Handles paddle collision
-	private void OnBodyEntered(Node body)
+	// Handles collision with the paddle
+	private void OnAreaEntered(Node area)
 	{
-		if (body is Paddle)
+		if (area is Paddle)
 		{
-			QueueFree();
+			// Emit an event or let the paddle handle logic
+			QueueFree(); // Remove the gem when it touches the paddle
 		}
 	}
 
