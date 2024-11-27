@@ -39,7 +39,7 @@ public partial class Paddle : Area2D
 		UpdatePaddleSpeed();
 
 		// Connect to the LengthChanger's signal dynamically
-		foreach (Node node in GetTree().GetNodesInGroup("length_changers")) // Need to add length_changers to groups in the IDE
+		foreach (Node node in GetTree().GetNodesInGroup("length_changers"))
 		{
 			if (node is LengthBooster lengthBooster)
 			{
@@ -53,7 +53,7 @@ public partial class Paddle : Area2D
 		}
 
 		// Connect to the SpeedChanger's signal dynamically
-		foreach (Node node in GetTree().GetNodesInGroup("speed_changers")) // Need to add speed_changers to groups in the IDE
+		foreach (Node node in GetTree().GetNodesInGroup("speed_changers")) 
 		{
 			if (node is SpeedBooster speedBooster)
 			{
@@ -66,9 +66,46 @@ public partial class Paddle : Area2D
 
 		}
 
+		// Connect to the gems' signals dynamically
+		foreach (Node node in GetTree().GetNodesInGroup("gems"))
+		{
+			Connect("body_entered", new Callable(this, nameof(OnBodyEntered)));
+		}
+
+
 		// Listen for new LengthChanger and SpeedChanger nodes added dynamically
 		GetTree().Connect("node_added", new Callable(this, nameof(OnNodeAdded)));
 	}
+
+	// Handle gem collision
+	private void OnBodyEntered(Node body)
+{	
+    if (body is LengthBooster lengthBooster)
+    {
+        // Increase the paddle's length
+        Length = 212.0f; 
+        lengthBooster.QueueFree();
+    }
+    else if (body is LengthDebooster lengthDebooster)
+    {
+        // Decrease the paddle's length
+        Length = 53.0f; 
+        lengthDebooster.QueueFree();
+    }
+    else if (body is SpeedBooster speedBooster)
+    {
+        // Increase the paddle's speed
+        Speed = 1000.0f;
+        speedBooster.QueueFree();
+    }
+    else if (body is SpeedDebooster speedDebooster)
+    {
+        // Decrease the paddle's speed
+        Speed = 250.0f; 
+        speedDebooster.QueueFree();
+    }
+}
+
 
 	// Handle dynamically added nodes
 	private void OnNodeAdded(Node node)

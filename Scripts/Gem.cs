@@ -15,6 +15,11 @@ public partial class Gem : Area2D
 		// Move the gem
 		Position += movement;
 		
+		// Check if the gem goes beyond the Y-axis threshold (675)
+		if (Position.Y > 675)
+		{
+			QueueFree();
+		}
 		
 	}
 
@@ -22,6 +27,18 @@ public partial class Gem : Area2D
 	public override void _Ready()
 	{
 		AddToGroup("gems");
+		
+		// Connect the "body_entered" signal dynamically
+		Connect("body_entered", new Callable(this, nameof(OnBodyEntered)));
+	}
+
+	// Handles paddle collision
+	private void OnBodyEntered(Node body)
+	{
+		if (body is Paddle)
+		{
+			QueueFree();
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
