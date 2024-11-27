@@ -11,7 +11,11 @@ public partial class Paddle : Area2D
 	public float Speed
 	{
 		get => _speed; // Returns the current speed
-		set => _speed = Math.Clamp(value, 250f, 1000.0f);
+		set 
+		{
+			_speed = Math.Clamp(value, 250f, 1000.0f);
+			UpdatePaddleSpeed();
+		} 
 	}
 		
 	// Property to get and set length with clamping
@@ -31,13 +35,41 @@ public partial class Paddle : Area2D
 		// Adjust the paddle's size based on its current length
 		UpdatePaddleSize();
 
+		// Adjust the paddle's speed based on its current speed
+		UpdatePaddleSpeed();
+
 		// Connect to the LengthChanger's signal dynamically
-		foreach (Node node in GetTree().GetNodesInGroup("length_changers")) // Need to add lengthchangers to groups in the IDE
+		foreach (Node node in GetTree().GetNodesInGroup("length_changers")) // Need to add length_changers to groups in the IDE
 		{
 			if (node is LengthChanger lengthChanger)
 			{
 				 lengthChanger.Connect(nameof(LengthChanger.LengthChanged), new Callable(this, nameof(OnLengthChanged)));
 			}
+		}
+
+		// Connect to the SpeedChanger's signal dynamically
+		foreach (Node node in GetTree().GetNodesInGroup("speed_changers")) // Need to add speed_changers to groups in the IDE
+		{
+			if (node is SpeedChanger speedChanger)
+			{
+				speedChanger.Connect(nameof(SpeedChanger.SpeedChanged), new Callable(this, nameof(OnSpeedChanged)));
+			}
+		}
+
+		// Listen for new LengthChanger and SpeedChanger nodes added dynamically
+		GetTree().Connect("node_added", new Callable(this, nameof(OnNodeAdded)));
+	}
+
+	// Handle dynamically added nodes
+	private void OnNodeAdded(Node node)
+	{
+		if (node is LengthChanger lengthChanger && node.IsInGroup("length_changers"))
+		{
+			lengthChanger.Connect(nameof(LengthChanger.LengthChanged), new Callable(this, nameof(OnLengthChanged)));
+		}
+		else if (node is SpeedChanger speedChanger && node.IsInGroup("speed_changers"))
+		{
+			speedChanger.Connect(nameof(SpeedChanger.SpeedChanged), new Callable(this, nameof(OnSpeedChanged)));
 		}
 	}
 
@@ -47,6 +79,37 @@ public partial class Paddle : Area2D
     	Length = newLength; // Update the paddle's length
 	}
 	
+	// Signal handler for changing speed
+	private void OnSpeedChanged(float newSpeed)
+	{
+		Speed = newSpeed; // Update the paddle's speed
+	}
+
+
+	// Logic related to changing the speed
+	private void UpdatePaddleSpeed()
+	{
+		// Get the boost and decrease sound nodes
+		var boostSound = GetNode<AudioStreamPlayer2D>("SpeedorLengthBoostSound");
+		var decreaseSound = GetNode<AudioStreamPlayer2D>("SpeedorLengthDecreaseSound");
+
+		// Play the appropriate sound based on the speed value
+		if (_speed >= 750.0f)
+		{
+			if (!boostSound.Playing) // Prevent overlapping sounds
+            {
+                boostSound.Play();
+            }
+		}
+
+		else if (_speed <= 350.0f)
+		{
+			if (!decreaseSound.Playing) // Prevent overlapping sounds
+            {
+                decreaseSound.Play();
+            }
+		}
+	}
 
 	// Movement logic
 	private void HandleMovement(double delta)

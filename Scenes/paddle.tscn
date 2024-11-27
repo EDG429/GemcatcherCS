@@ -16,3 +16,7 @@ texture = ExtResource("1_rjkv7")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_wdmry")
+
+[node name="SpeedorLengthBoostSound" type="AudioStreamPlayer2D" parent="."]
+
+[node name="SpeedorLengthDecreaseSound" type="AudioStreamPlayer2D" parent="."]
