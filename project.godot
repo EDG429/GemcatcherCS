@@ -15,6 +15,14 @@ run/main_scene="res://Scenes/game.tscn"
 config/features=PackedStringArray("4.3", "C#", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*res://Scripts/Global.cs"
+
+[display]
+
+window/size/resizable=false
+
 [dotnet]
 
 project/assembly_name="GemcatcherCS"

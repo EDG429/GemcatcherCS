@@ -11,7 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://dsoqsrr661w31" path="res://Assets/bgm_action_5.mp3" id="9_0ibdw"]
 
 [sub_resource type="SystemFont" id="SystemFont_fd3ox"]
-font_names = PackedStringArray("Pixelify Sans", "", "", "", "", "", "", "", "", "", "", "", "", "", "")
+font_names = PackedStringArray(" Sans", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Roboto")
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_33k8f")

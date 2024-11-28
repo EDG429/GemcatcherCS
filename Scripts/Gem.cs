@@ -3,6 +3,9 @@ using System;
 
 public partial class Gem : Area2D
 {	
+	// Signal
+	[Signal] public delegate void OnGemOffScreenEventHandler();
+
 	// Gem variables
 	private float _speed = 300.0f;
 
@@ -16,8 +19,14 @@ public partial class Gem : Area2D
 		Position += movement;
 		
 		// Check if the gem goes beyond the Y-axis threshold (675)
+		CheckHitBottom();		
+	}
+
+	private void CheckHitBottom()
+	{
 		if (Position.Y > 675)
-		{
+		{	
+			EmitSignal(SignalName.OnGemOffScreen);						
 			QueueFree();
 		}
 	}

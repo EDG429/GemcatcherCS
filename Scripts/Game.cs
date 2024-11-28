@@ -53,9 +53,10 @@ public partial class Game : Node2D
 		// Instantiate the selected gem and add it to the scene
 		if (selectedGemScene != null)
 		{
-			Node2D gemInstance = selectedGemScene.Instantiate<Node2D>();
+			Gem gemInstance = selectedGemScene.Instantiate<Gem>();
 			gemInstance.Position = spawnPosition;
 			AddChild(gemInstance);
+			gemInstance.OnGemOffScreen += GameOver;
 		}
 	}
 
@@ -86,6 +87,17 @@ public partial class Game : Node2D
 		{
 			_scoreLabel.Text = $"Score = {_score}";
 		}
+	}
+
+	private void GameOver()
+	{
+		Global global = (Global)GetNode("/root/Global");
+		global.PlayerScore = _score;
+		foreach (Node child in GetChildren())
+		{
+			child.QueueFree();
+		}
+		GetTree().ChangeSceneToFile("res://Scenes/GameOverScreen.tscn");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
