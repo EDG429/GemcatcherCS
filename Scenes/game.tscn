@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dotb2ot0352lj"]
+[gd_scene load_steps=11 format=3 uid="uid://dotb2ot0352lj"]
 
 [ext_resource type="Script" path="res://Scripts/Game.cs" id="1_33k8f"]
 [ext_resource type="Texture2D" uid="uid://bsj3c55mkc6vk" path="res://Assets/GameBg.png" id="1_hf22b"]
@@ -9,6 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://c1km0wiigeku8" path="res://Scenes/speeddeboostergem.tscn" id="6_ckqsj"]
 [ext_resource type="PackedScene" uid="uid://cvs7wag3xmlg5" path="res://Scenes/lengthdeboostergem.tscn" id="6_x2c03"]
 [ext_resource type="AudioStream" uid="uid://dsoqsrr661w31" path="res://Assets/bgm_action_5.mp3" id="9_0ibdw"]
+
+[sub_resource type="SystemFont" id="SystemFont_fd3ox"]
+font_names = PackedStringArray("Pixelify Sans", "", "", "", "", "", "", "", "", "", "", "", "", "", "")
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_33k8f")
@@ -30,3 +33,12 @@ position = Vector2(574, 625)
 stream = ExtResource("9_0ibdw")
 volume_db = 5.0
 autoplay = true
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_right = 231.0
+offset_bottom = 32.0
+theme_override_fonts/font = SubResource("SystemFont_fd3ox")
+theme_override_font_sizes/font_size = 35
+text = "Score = 0"
+
+[connection signal="OnScored" from="Paddle" to="." method="OnScored"]

@@ -14,6 +14,10 @@ public partial class Game : Node2D
 	// Timer for spawning gems
 	private Timer _spawnTimer;
 
+	// Reference to the ScoreLabel and score variable
+	private Label _scoreLabel;
+	private int _score = 0;
+
 	// Random number generator
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
 	
@@ -28,6 +32,9 @@ public partial class Game : Node2D
 		_spawnTimer.OneShot = false; // Repeating timer
 		_spawnTimer.Connect("timeout", new Callable(this, nameof(SpawnRandomGem)));
 		AddChild(_spawnTimer);
+
+		// Get reference to the ScoreLabel node
+		_scoreLabel = GetNode<Label>("ScoreLabel");
 
 		// Start the timer
 		_spawnTimer.Start();
@@ -64,6 +71,20 @@ public partial class Game : Node2D
 			case 3: return speedboostergem;
 			case 4: return speeddeboostergem;
 			default: return null;
+		}
+	}
+
+	private void OnScored()
+	{
+		_score++;
+		UpdateScoreLabel();
+	}
+
+	private void UpdateScoreLabel()
+	{
+		if (_scoreLabel != null)
+		{
+			_scoreLabel.Text = $"Score = {_score}";
 		}
 	}
 

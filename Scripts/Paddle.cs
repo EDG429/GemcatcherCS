@@ -3,6 +3,9 @@ using System;
 
 public partial class Paddle : Area2D
 {
+	// Signals
+	[Signal] public delegate void OnScoredEventHandler(); // How to declare a signal
+	
 	// Paddle variables
 	private float _speed = 500.0f; // Default speed
 	private float _length = 106.0f; // Default length of the paddle
@@ -40,7 +43,7 @@ public partial class Paddle : Area2D
 
 	// Handle gem collision
 	private void OnAreaEntered(Node area)
-	{ 
+	{ 		
 		var onGemEnteredSound = GetNode<AudioStreamPlayer2D>("OnGemEnteredSound");
 		// Check if the area is a Gem
 		if (area is Gem gem)
@@ -68,8 +71,11 @@ public partial class Paddle : Area2D
 			}
 			// Play the SFX
 			onGemEnteredSound.Play();
+			// Update the score
+			EmitSignal(SignalName.OnScored);
 			// Free the gem after applying its effect
 			gem.QueueFree();
+			
 		}
 	}
 
