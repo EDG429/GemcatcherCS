@@ -1,12 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://dotb2ot0352lj"]
+[gd_scene load_steps=9 format=3 uid="uid://dotb2ot0352lj"]
 
 [ext_resource type="Script" path="res://Scripts/Game.cs" id="1_33k8f"]
 [ext_resource type="Texture2D" uid="uid://bsj3c55mkc6vk" path="res://Assets/GameBg.png" id="1_hf22b"]
 [ext_resource type="PackedScene" uid="uid://cv8h2gu7tco7m" path="res://Scenes/paddle.tscn" id="2_6m540"]
 [ext_resource type="PackedScene" uid="uid://bw083wdqdaygv" path="res://Scenes/gem.tscn" id="4_uuoqg"]
+[ext_resource type="PackedScene" uid="uid://r2fffrft8gvo" path="res://Scenes/lengthboostergem.tscn" id="5_6qpni"]
+[ext_resource type="PackedScene" uid="uid://cpbywek0ah874" path="res://Scenes/speedboostergem.tscn" id="5_gl1dj"]
+[ext_resource type="PackedScene" uid="uid://c1km0wiigeku8" path="res://Scenes/speeddeboostergem.tscn" id="6_ckqsj"]
+[ext_resource type="PackedScene" uid="uid://cvs7wag3xmlg5" path="res://Scenes/lengthdeboostergem.tscn" id="6_x2c03"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_33k8f")
+gem = ExtResource("4_uuoqg")
+lengthboostergem = ExtResource("5_6qpni")
+lengthdeboostergem = ExtResource("6_x2c03")
+speedboostergem = ExtResource("5_gl1dj")
+speeddeboostergem = ExtResource("6_ckqsj")
 
 [node name="GameBg" type="Sprite2D" parent="."]
 position = Vector2(558, 311)
@@ -15,6 +24,3 @@ texture = ExtResource("1_hf22b")
 
 [node name="Paddle" parent="." instance=ExtResource("2_6m540")]
 position = Vector2(574, 625)
-
-[node name="gem" parent="." instance=ExtResource("4_uuoqg")]
-position = Vector2(568, 92)

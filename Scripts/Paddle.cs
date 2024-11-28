@@ -96,10 +96,25 @@ public partial class Paddle : Area2D
 	// Logic to update the paddle's size
 	private void UpdatePaddleSize()
 	{
-		if (GetNodeOrNull<Sprite2D>("Sprite2D") is Sprite2D sprite)
+		if (GetNodeOrNull<Sprite2D>("Sprite2D") is Sprite2D sprite && GetNodeOrNull<CollisionShape2D>("CollisionShape2D") is CollisionShape2D collisionShape)
 		{
 			float defaultLength = 106.0f;
 			sprite.Scale = new Vector2(Length / defaultLength, sprite.Scale.Y);
+
+			// Ensure the CollisionShape matches the sprite's size pixel-perfectly
+			if (collisionShape.Shape is RectangleShape2D rectangleShape && sprite.Texture != null)
+			{
+				// Get the original size of the sprite's texture in pixels
+				Vector2 textureSize = sprite.Texture.GetSize();
+
+				// Calculate the scaled size of the sprite
+				float scaledWidth = textureSize.X * sprite.Scale.X;
+				float scaledHeight = textureSize.Y * sprite.Scale.Y;
+
+				// Update the CollisionShape2D to match the scaled size
+				rectangleShape.Size = new Vector2(scaledWidth, scaledHeight);
+			}	
+			
 		}
 	}
 

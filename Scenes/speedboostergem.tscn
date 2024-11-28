@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpbywek0ah874"]
+
+[ext_resource type="Script" path="res://Scripts/SpeedBooster.cs" id="1_oc2xr"]
+[ext_resource type="Texture2D" uid="uid://dkt8bkd85hjm0" path="res://Assets/element_red_diamond.png" id="2_jngka"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mj7vh"]
+
+[node name="SpeedBoosterGem" type="Area2D" groups=["gems"]]
+script = ExtResource("1_oc2xr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_jngka")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 0.785398
+scale = Vector2(1.87827, 1.80733)
+shape = SubResource("RectangleShape2D_mj7vh")

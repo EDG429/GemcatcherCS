@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://r2fffrft8gvo"]
+
+[ext_resource type="Script" path="res://Scripts/LengthBooster.cs" id="1_q4x36"]
+[ext_resource type="Texture2D" uid="uid://dkt8bkd85hjm0" path="res://Assets/element_red_diamond.png" id="2_1qokk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mj7vh"]
+
+[node name="LengthBoosterGem" type="Area2D" groups=["gems"]]
+script = ExtResource("1_q4x36")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_1qokk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 0.785398
+scale = Vector2(1.87827, 1.80733)
+shape = SubResource("RectangleShape2D_mj7vh")
