@@ -20,7 +20,7 @@ public partial class SpeedDebooster : Gem
         if (body is Paddle)
         {
             // Emit the LengthChanged signal with the new length (212.0f in this case)
-            EmitSignal(nameof(SpeedChanged), 250.0f);
+            EmitSignal(nameof(SpeedChanged), 350.0f);
         }
     }
 }

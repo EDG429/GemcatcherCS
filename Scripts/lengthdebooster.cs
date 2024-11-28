@@ -11,8 +11,7 @@ public partial class LengthDebooster : Gem
     {
         // Add to the "length_changers" group
         AddToGroup("length_changers");
-        AddToGroup("gems");
-        GD.Print($"LengthChanger added to group: length_changers");
+        AddToGroup("gems");        
     }
 
     private void _on_Area2D_body_entered(Node body)

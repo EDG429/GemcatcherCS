@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cv8h2gu7tco7m"]
+[gd_scene load_steps=5 format=3 uid="uid://cv8h2gu7tco7m"]
 
 [ext_resource type="Script" path="res://Scripts/Paddle.cs" id="1_127wf"]
 [ext_resource type="Texture2D" uid="uid://c5dgm2a0loqrg" path="res://Assets/paddleBlu.png" id="1_rjkv7"]
+[ext_resource type="AudioStream" uid="uid://fuulsiry4q" path="res://Assets/spell1_0.wav" id="3_e8xl4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1jvp3"]
 size = Vector2(104, 24)
@@ -18,3 +19,7 @@ shape = SubResource("RectangleShape2D_1jvp3")
 [node name="SpeedorLengthBoostSound" type="AudioStreamPlayer2D" parent="."]
 
 [node name="SpeedorLengthDecreaseSound" type="AudioStreamPlayer2D" parent="."]
+
+[node name="OnGemEnteredSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_e8xl4")
+volume_db = 3.0

@@ -13,7 +13,7 @@ public partial class Paddle : Area2D
 		get => _speed; 
 		set 
 		{
-			_speed = Math.Clamp(value, 250f, 1000.0f);
+			_speed = Math.Clamp(value, 350f, 1000.0f);
 			UpdatePaddleSpeed();
 		} 
 	}
@@ -41,6 +41,7 @@ public partial class Paddle : Area2D
 	// Handle gem collision
 	private void OnAreaEntered(Node area)
 	{ 
+		var onGemEnteredSound = GetNode<AudioStreamPlayer2D>("OnGemEnteredSound");
 		// Check if the area is a Gem
 		if (area is Gem gem)
 		{
@@ -65,7 +66,8 @@ public partial class Paddle : Area2D
 				// Decrease the paddle's speed
 				Speed = 250.0f;
 			}
-
+			// Play the SFX
+			onGemEnteredSound.Play();
 			// Free the gem after applying its effect
 			gem.QueueFree();
 		}
